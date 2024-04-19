@@ -1,0 +1,25 @@
+
+.product-details-page{
+    width: 226px;
+    height: 349px;
+    overflow: hidden;
+}
+
+.product-details-page img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-shadow: none;
+}
+
+h2.product-details-text{
+    text-align: start;
+}
+
+h5.product-details-text{
+    text-align: start;
+}
+
+p.product-details-text{
+    text-align: start;
+}

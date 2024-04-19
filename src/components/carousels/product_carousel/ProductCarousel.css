@@ -1,0 +1,61 @@
+/* carousels base class */
+.product-carousel.carousel {
+    padding: 20px;
+    margin-bottom: 4rem;
+}
+
+/* Since positioning the image, we need to help out the caption */
+.product-carousel.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.product-carousel.carousel-item {
+    height: 100%;
+}
+
+/* Declare heights because of positioning of img element */
+.product-carousel.carousel-inner {
+
+    width: 70%;
+    margin-left: auto; /* Centers the element horizontally by pushing it equally from both sides */
+    margin-right: auto;
+}
+
+.product-carousel svg {
+    width: 40px;
+    height: 40px;
+    fill: #23A6F0;
+}
+
+.product-carousel svg:hover {
+    fill: #4db8ff;
+}
+
+.product-carousel.Text {
+    font-size: 20px;
+    text-transform: initial;
+}
+
+.marketing .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+}
+
+
+@media (min-width: 40em) {
+    /* Bump up size of carousel content */
+    .product-carousel.carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+}

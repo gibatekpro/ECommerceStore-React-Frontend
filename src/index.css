@@ -11,3 +11,197 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700');
+
+.holder {
+  min-height: 100vh;
+  padding-top: 4.5rem;
+}
+
+.b-divider {
+  width: 100%;
+  height: 3rem;
+  /*background-color: rgba(0, 0, 0, .1);*/
+  /*border: solid rgba(0, 0, 0, .15);*/
+  /*border-width: 1px 0;*/
+  /*box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);*/
+}
+
+p{
+  font-family: sans-serif;
+  text-decoration: none;
+}
+h2{
+  font-family: sans-serif;
+  text-decoration: none;
+}
+h3{
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+h4{
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+h5{
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+.App {
+  text-align: center;
+}
+
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold; /* 700 is equivalent to bold for Montserrat */
+  font-size: calc(8px + 2vmin);
+  color: #252B42;
+  text-decoration: none;
+}
+
+
+.header {
+  background-color: #252B42;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Text {
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+}
+
+.Text.grey {
+  color: #737373;
+}
+
+.Text.grey:hover {
+  color: #a7acb1;
+}
+
+.Text.grey:active{
+  color: #373b3e;
+}
+
+
+.Text.grey:focus{
+  color: #373b3e;
+}
+
+
+.Text.grey:enabled{
+  color: #373b3e;
+}
+
+
+.Text.blue {
+  color: #23A6F0;
+}
+
+.hard-button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.hard-button.green{
+  color: #ffffff;
+  background-color: #2DC071;
+}
+
+.hard-button.blue{
+  color: #ffffff;
+  background-color: #23A6F0;
+}
+
+.hard-button.green:hover {
+  background-color: #20c997;
+}
+
+.hard-button.blue:hover {
+  background-color: #4db8ff;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+
+.outline-button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.outline-button.green{
+  color: #2DC071;
+  border: 1px solid #2DC071;
+}
+
+.outline-button.green:hover {
+  background-color: #20c997;
+  color: #ffffff;
+}
+
+.Icon {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  fill: #23A6F0;
+  color: #23A6F0;
+  margin-left: 20px;
+}
+
+.Text.blue:hover{
+  color: #4db8ff;
+}
+
+.Icon:hover{
+  fill: #4db8ff;
+  color: #4db8ff;
+}
+
+/*@media (prefers-reduced-motion: no-preference) {*/
+/*  .App-logo {*/
+/*    !*animation: App-logo-spin infinite 20s linear;*!*/
+/*  }*/
+/*}*/
+
+
+.link {
+  color: #61dafb;
+}
+
+.main-color {
+  color: #252B42;
+}
+
+.accent-color {
+  color: #23A6F0;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,71 @@
+
+.Text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold; /* 700 is equivalent to bold for Montserrat */
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.Text.black {
+    color: #737373;
+}
+
+.Text.black:hover {
+    color: #a7acb1;
+}
+
+.Text.black:active{
+    color: #373b3e;
+}
+
+
+.Text.black:focus{
+    color: #373b3e;
+}
+
+
+.Text.black:enabled{
+    color: #373b3e;
+}
+
+
+.Text.blue {
+    color: #23A6F0;
+}
+
+.outline-button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #23A6F0; /* Text color */
+    background-color: transparent;
+    border: 1px solid #23A6F0;
+    border-radius: 7px;
+    padding: 2px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.outline-button:hover {
+    background-color: #23A6F0;
+    color: #ffffff;
+}
+
+.Icon {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    fill: #23A6F0;
+    color: #23A6F0;
+    margin-left: 20px;
+}
+
+.Text.blue:hover{
+    color: #4db8ff;
+}
+
+.Icon:hover{
+    fill: #4db8ff;
+    color: #4db8ff;
+}
+
+

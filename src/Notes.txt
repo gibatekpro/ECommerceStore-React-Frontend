@@ -1,0 +1,5 @@
+1. Add Bootstrap to app
+
+Make use of carousel and heroes
+
+Make use of useEffect and useState (Destructuring an array)
