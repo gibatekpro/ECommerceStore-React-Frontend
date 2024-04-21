@@ -6,10 +6,14 @@ import imagePlaceholder from "../../../assets/images/Placeholder Image Card.jpeg
 import Product from "../../../models/Product";
 import {Link} from "react-router-dom";
 import StarsReview from "../../stars_review/StarsReview";
+import {useCartService} from "../../../services/CartServiceProvider";
+import CartItem from "../../../models/CartItem";
 
 // import {useHistory, Link} from 'react-router-dom';
 
 function ProductCard(props) {
+
+    let cartService = useCartService();
 
     const productModel = Product.fromProps(props.product);
 
@@ -45,6 +49,11 @@ function ProductCard(props) {
         });
     }, []);
 
+    const addToCart = () => {
+        let cartItem = CartItem.fromProps(productModel);
+        cartService.addToCart(cartItem);
+    }
+
     return (
         // <Link style={{textDecoration: "none"}} to={`/product-details/${productModel.id}`}>
         <div className="card shadow-sm">
@@ -53,25 +62,34 @@ function ProductCard(props) {
                 flexDirection: "column",
                 height: "100%",
                 textDecoration: "none",
-                color: "inherit"}}>
+                color: "inherit"
+            }}>
                 <div className="card-img-top">
                     {isLoading || httpError ? <img src={imagePlaceholder} alt="Example image"/> :
                         <img src={productImage} alt="Example image"/>}
                 </div>
-                <div className="card-body">
+            </Link>
+            <div className="card-body">
+                <Link className="product-card-link" to={`/product-details/${productModel.id}`} style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    textDecoration: "none",
+                    color: "inherit"
+                }}>
                     <h6>{productModel.productName}</h6>
                     <p className="card-text">{productModel.description}</p>
-                    <StarsReview
-                        rating={4.5}
-                        size={16}
-                    />
-                    <br/>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <button type="button" className="outline-button green">Add to cart</button>
-                        <small className="text-body-secondary">{CurrencyValue(productModel.unitPrice)}</small>
-                    </div>
+                </Link>
+                <StarsReview
+                    rating={4.5}
+                    size={16}
+                />
+                <br/>
+                <div className="d-flex justify-content-between align-items-center">
+                    <button type="button" className="outline-button green" onClick={addToCart}>Add to cart</button>
+                    <small className="text-body-secondary">{CurrencyValue(productModel.unitPrice)}</small>
                 </div>
-            </Link>
+            </div>
         </div>
     )
         ;

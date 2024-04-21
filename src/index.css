@@ -107,6 +107,7 @@ h5{
   color: #23A6F0;
 }
 
+
 .hard-button {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
@@ -122,6 +123,13 @@ h5{
   background-color: #2DC071;
 }
 
+.hard-button.red {
+  color: #ffffff;
+  background-color: #b02a37;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
 .hard-button.blue{
   color: #ffffff;
   background-color: #23A6F0;
@@ -133,6 +141,10 @@ h5{
 
 .hard-button.blue:hover {
   background-color: #4db8ff;
+}
+
+.hard-button.red:hover {
+  background-color: #a52834;
 }
 
 .uppercase{
@@ -152,6 +164,12 @@ h5{
 
 .outline-button.green{
   color: #2DC071;
+  border: 1px solid #2DC071;
+}
+
+.outline-button.green-lg{
+  color: #2DC071;
+  padding: 10px 20px;
   border: 1px solid #2DC071;
 }
 
