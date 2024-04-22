@@ -14,6 +14,7 @@ import FailurePage from "./pages/register_page/FailurePage";
 import SuccessPage from "./pages/register_page/SuccessPage";
 import {CartServiceProvider} from "./services/CartServiceProvider";
 import CartDetailsPage from "./pages/cart_details_page/CartDetailsPage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 function App() {
     return (
@@ -31,6 +32,8 @@ function App() {
                             <Route path="register" element={<RegisterPage/>}>
                             </Route>
                             <Route path="cart-details" element={<CartDetailsPage/>}>
+                            </Route>
+                            <Route path="cart-details/checkout" element={<CheckoutPage/>}>
                             </Route>
                             <Route path="register/success" element={<SuccessPage/>}>
                             </Route>

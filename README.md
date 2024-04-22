@@ -18,3 +18,15 @@ Yup for Formik Validation [Documentation](https://github.com/jquense/yup)
 React routing [Documentation](https://github.com/remix-run/react-router/tree/dev/examples)
 
 #### `npm install react-router-dom`
+
+Stripe Payment [Documentation](https://docs.stripe.com/api/payment_intents/create)
+
+#### `npm install stripe`
+
+Stripe React Javascript [Documentation](https://docs.stripe.com/api/payment_intents/create)
+
+#### `npm install @stripe/react-stripe-js`
+
+Stripe Javascript [Documentation](https://docs.stripe.com/api/payment_intents/create)
+
+#### `npm install @stripe/stripe-js`

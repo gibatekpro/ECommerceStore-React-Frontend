@@ -6,12 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {BrowserRouter} from "react-router-dom";
+import {Util} from "./util/utils";
+import {Elements} from "@stripe/react-stripe-js";
+import {loadStripe} from "@stripe/stripe-js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const stripePromise = loadStripe(Util.stripeKey);
 root.render(
   <React.StrictMode>
       <BrowserRouter>
-          <App />
+          <Elements stripe={stripePromise}>
+              <App />
+          </Elements>
       </BrowserRouter>
   </React.StrictMode>
 );

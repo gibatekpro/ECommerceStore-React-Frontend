@@ -5,13 +5,17 @@ import cartItem from "../../models/CartItem";
 import CartItemCard from "../../components/cards/cart_item_card/CartItemCard";
 import React from "react";
 import ProductCard from "../../components/cards/product_card/ProductCard";
-import {json} from "react-router-dom";
+import {json, useNavigate} from "react-router-dom";
 
 function CartDetailsPage() {
     let cartService = useCartService()
+    let navigate = useNavigate();
 
     let cartItems = cartService.storedCartItems !== null ? cartService.storedCartItems : [];
 
+    const proceedToCheckout = () => {
+        navigate("checkout")
+    }
 
     return (
         <div className="mt-5">
@@ -31,7 +35,7 @@ function CartDetailsPage() {
                 <p>Shipping: FREE</p>
                 <p>Total Price: {CurrencyValue(cartService.totalPrice)}</p>
                 <div>
-                    <button className="hard-button blue">Checkout</button>
+                    <button className="hard-button blue" onClick={proceedToCheckout}>Checkout</button>
                 </div>
             </div>
             <div hidden={cartItems.length > 0}>

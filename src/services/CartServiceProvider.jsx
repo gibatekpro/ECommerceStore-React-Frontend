@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import CartItem from "../models/CartItem";
 import {Util} from "../util/utils";
+import {useNavigate} from "react-router-dom";
 
 // Creating the auth context with default values
 const CartServiceContext = createContext(null);
@@ -11,6 +12,7 @@ export const CartServiceProvider = ({children}) => {
     const [storedCartItems, setStoredCartItems] = useState(JSON.parse(localStorage.getItem('cartItems')));
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
+    let navigate = useNavigate();
 
     // localStorage.removeItem('cartItems')
 
@@ -133,13 +135,30 @@ export const CartServiceProvider = ({children}) => {
 
     }
 
+    const resetCart = () => {
+
+        setStoredCartItems([]);
+
+        setTotalPrice(0);
+
+        setTotalQuantity(0);
+
+        localStorage.removeItem('cartItems');
+
+
+        //navigate back to the products page
+        navigate("/")
+
+    }
+
     const value = {
         addToCart,
         decrementQuantity,
         remove,
+        resetCart,
         storedCartItems,
         totalPrice,
-        totalQuantity
+        totalQuantity,
     };
 
     return (

@@ -30,14 +30,16 @@ function LoginPage() {
 
     async function handleSubmit(values) {
 
-        console.log(values)
         setEmail(values.email);
         setPassword(values.password);
 
         try {
             // Call the login function with email and password
             await auth.login(values.email, values.password, (user) => {
-                localStorage.setItem('user', user)
+
+                let userString = JSON.stringify(user);
+
+                localStorage.setItem('user', userString)
                 // user experience.
                 navigate(from, {replace: true});
             });
