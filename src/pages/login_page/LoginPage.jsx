@@ -37,9 +37,7 @@ function LoginPage() {
             // Call the login function with email and password
             await auth.login(values.email, values.password, (user) => {
 
-                let userString = JSON.stringify(user);
-
-                localStorage.setItem('user', userString)
+                localStorage.setItem('user', user)
                 // user experience.
                 navigate(from, {replace: true});
             });

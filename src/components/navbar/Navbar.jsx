@@ -35,7 +35,6 @@ function Navbar() {
 
                         return ProductCategory.fromProps(item);
                     });
-                    console.error('Error fetching product categories :', productCategories);
 
                     setProductCategories(productCategories);
 
@@ -117,9 +116,9 @@ function Navbar() {
                                 </a>
                             </li>
                             <li className="nav-item" hidden={!auth.user}>
-                                <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
+                                <Link className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
                                    onClick={performLogout}>
-                                    Logout</a>
+                                    Logout</Link>
                             </li>
                             <li className="nav-item" hidden={auth.user}>
                                 <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
@@ -131,9 +130,9 @@ function Navbar() {
                                     </svg>
                                     Login</a>
                             </li>
-                            <a href="/search">
+                            <Link to="search">
                                 <button className="nav-item hard-button blue mx-3" type="submit">Search</button>
-                            </a>
+                            </Link>
                         </ul>
                     </div>
                 </div>

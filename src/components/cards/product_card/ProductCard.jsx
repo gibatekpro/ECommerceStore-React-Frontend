@@ -65,8 +65,15 @@ function ProductCard(props) {
                 color: "inherit"
             }}>
                 <div className="card-img-top">
-                    {isLoading || httpError ? <img src={imagePlaceholder} alt="Example image"/> :
-                        <img src={productImage} alt="Example image"/>}
+                    {isLoading || httpError ?
+                        <svg className="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg"
+                             role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice"
+                             focusable="false"><title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#868e96"/>
+                            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+                        </svg> :
+                        <img src={productImage} alt="Example image"/>
+                    }
                 </div>
             </Link>
             <div className="card-body">

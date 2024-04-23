@@ -63,9 +63,10 @@ function CheckoutPage(props) {
 
         //remain at bottom of page
         window.scrollTo(0, document.body.scrollHeight);
-        auth.checkTokenExpiration(token);
 
-        if(!stripe || !elements || !elements.getElement(CardElement)){
+        auth.checkTokenExpiration();
+
+        if (!stripe || !elements || !elements.getElement(CardElement)) {
             console.log("Form is not doing anything")
             setIsLoading(false)
             return;
@@ -116,7 +117,6 @@ function CheckoutPage(props) {
         const baseUrl = `${Util.apiUrl}checkout/payment-intent`;
 
         try {
-            console.log(`The response intent is: ${token}`);
             const response = await fetch(baseUrl, {
                 method: "POST",
                 body: JSON.stringify(paymentInfo),
@@ -183,9 +183,7 @@ function CheckoutPage(props) {
             if (response.ok) {
 
 
-                await response.json().then((data) =>{
-
-                    console.log(`Data>>>>>: ${JSON.stringify(data)}`); // Converting to string for clear output
+                await response.json().then((data) => {
 
                     alert(`Payment complete. \n Order Tracking number: ${data.orderTrackingNumber}`);
 
@@ -404,7 +402,7 @@ function CheckoutPage(props) {
 
                                     {/*////////////////////////////SHIPPING ADDRESS SECTION//////////////////////////////////*/}
                                     <h4 className="mb-3 mt-5">Shipping Address</h4>
-                                    <hr className="mb-5"/>
+                                    <hr className="mb-2"/>
 
                                     <div className="col-md-12">
                                         <Form.Group controlId="shippingAddress">
@@ -516,7 +514,7 @@ function CheckoutPage(props) {
                                     {/*////////////////////////////BILLING ADDRESS SECTION//////////////////////////////////*/}
 
                                     <h4 hidden={shippingIsBilling} className="mb-3 mt-5">Billing Address</h4>
-                                    <hr hidden={shippingIsBilling} className="mb-5"/>
+                                    <hr hidden={shippingIsBilling} className="mb-2"/>
 
                                     <div hidden={shippingIsBilling} className="col-md-12">
                                         <Form.Group controlId="billingAddress">
@@ -638,7 +636,13 @@ function CheckoutPage(props) {
                                     </div>
 
                                     {/*////////////////////////////SUBMIT BUTTON//////////////////////////////////*/}
-                                    {isLoading && <LoadingSpinner/>}
+                                    {isLoading &&
+                                        <h6 className="text-center" hidden={!isLoading}>
+                                            <div className="spinner-border text-primary " role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        </h6>
+                                    }
                                     <Button
                                         className="hard-button blue"
                                         type="submit"

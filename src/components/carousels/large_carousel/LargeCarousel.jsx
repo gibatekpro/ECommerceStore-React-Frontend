@@ -2,6 +2,7 @@ import './LargeCarousel.css'
 import image1 from "../../../assets/images/carousel/image1.jpg";
 import image2 from "../../../assets/images/carousel/image2.jpg";
 import image3 from "../../../assets/images/carousel/image3.jpg";
+import {Link} from "react-router-dom";
 
 
 function LargeCarousel(){
@@ -25,7 +26,9 @@ function LargeCarousel(){
                             <h1>Exclusive Offers</h1>
                             <p className="opacity-75">Lots of exclusive offers just waiting for you! Don't miss out on
                                 the chance to save big.</p>
-                            <button className="hard-button green uppercase" href="#">Shop Now</button>
+                            <Link to={"/search"}>
+                                <button className="hard-button green uppercase">Shop Now</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -37,7 +40,9 @@ function LargeCarousel(){
                         <div className="carousel-caption large-carousel">
                             <h1>Best deals for home appliances</h1>
                             <p>Get the best appliances and electronics to make your home and office extra-comfy.</p>
-                            <button className="hard-button green uppercase" href="#">Shop Now</button>
+                            <Link to={"/search"}>
+                                <button className="hard-button green uppercase">Shop Now</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -49,7 +54,9 @@ function LargeCarousel(){
                         <div className="carousel-caption large-carousel text-end">
                             <h1>Explore trending gadgets</h1>
                             <p>Great deals on all the latest trending gadgets.</p>
-                            <button className="hard-button green uppercase" href="#">Shop Now</button>
+                            <Link to={"/search"}>
+                                <button className="hard-button green uppercase">Shop Now</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

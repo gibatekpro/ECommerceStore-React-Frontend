@@ -3,6 +3,7 @@ import imagePlaceholder from "../../../assets/images/Placeholder Image Card.jpeg
 import React, {useEffect, useState} from "react";
 import {Util} from "../../../util/utils";
 import ProductCategory from "../../../models/ProductCategory";
+import {Link} from "react-router-dom";
 
 function ProductCategoryCard(props) {
 
@@ -50,7 +51,9 @@ function ProductCategoryCard(props) {
                 <h5>{categoryModel.categoryName}</h5>
                 <p className="card-text">{categoryModel.categoryDescription}</p>
                 <div className="d-flex justify-content-center align-items-center">
-                    <button type="button" className="outline-button green">Shop now</button>
+                    <Link to={`product-categories/${categoryModel.categoryName}/${categoryModel.id}`}>
+                        <button type="button" className="outline-button green">Shop now</button>
+                    </Link>
                 </div>
             </div>
         </div>

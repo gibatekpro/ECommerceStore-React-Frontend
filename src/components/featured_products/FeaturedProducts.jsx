@@ -22,7 +22,6 @@ function FeaturedProducts() {
                 const data = await response.json();
                 // console.log(data);
                 setProducts(data._embedded.data);
-                console.log(data)
             } catch (error) {
                 console.error('Error fetching product categories:', error.message);
                 setHttpError(error.message);
