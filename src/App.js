@@ -7,16 +7,23 @@ import {Routes, Route, Outlet, Link} from "react-router-dom";
 import ProductDetailsPage from "./pages/product_details_page/ProductDetailsPage";
 import RegisterPage from "./pages/register_page/RegisterPage";
 import LoginPage from "./pages/login_page/LoginPage";
-import {AuthProvider} from "./auth/AuthProvider";
-import RequireAuth from "./auth/RequireAuth";
+import {AuthProvider, useAuth} from "./services/auth/AuthProvider";
+import RequireAuth from "./services/auth/RequireAuth";
 import ProtectedPage from "./pages/ProtectedPage";
 import FailurePage from "./pages/register_page/FailurePage";
 import SuccessPage from "./pages/register_page/SuccessPage";
 import {CartServiceProvider} from "./services/CartServiceProvider";
 import CartDetailsPage from "./pages/cart_details_page/CartDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import {useEffect, useState} from "react";
+import {UserProfile} from "./models/UserProfile";
+import {useElements, useStripe} from "@stripe/react-stripe-js";
+
 
 function App() {
+
+    const [userProfile, setUserProfile] = useState(localStorage.getItem('userProfile'));
+
     return (
         <div>
             <AuthProvider>
@@ -33,8 +40,6 @@ function App() {
                             </Route>
                             <Route path="cart-details" element={<CartDetailsPage/>}>
                             </Route>
-                            <Route path="cart-details/checkout" element={<CheckoutPage/>}>
-                            </Route>
                             <Route path="register/success" element={<SuccessPage/>}>
                             </Route>
                             <Route path="register/failure" element={<FailurePage/>}>
@@ -49,10 +54,17 @@ function App() {
                                 path="/protected"
                                 element={
                                     <RequireAuth>
-                                        <ProtectedPage />
+                                        <ProtectedPage/>
                                     </RequireAuth>
                                 }
                             />
+                            <Route path="cart-details/checkout"
+                                   element={
+                                       <RequireAuth>
+                                           <CheckoutPage userProfile={userProfile}/>
+                                       </RequireAuth>
+                                   }>
+                            </Route>
                         </Routes>
                         {/*<ProductDetailsPage/>*/}
                     </div>

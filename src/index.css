@@ -178,6 +178,11 @@ h5{
   color: #ffffff;
 }
 
+.outline-button.green-lg:hover {
+  background-color: #20c997;
+  color: #ffffff;
+}
+
 .Icon {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;

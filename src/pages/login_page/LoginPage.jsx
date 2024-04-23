@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useAuth} from "../../auth/AuthProvider";
+import {useAuth} from "../../services/auth/AuthProvider";
 
 function LoginPage() {
 

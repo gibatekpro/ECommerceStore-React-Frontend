@@ -4,14 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import * as formik from 'formik';
+import {Field} from "formik";
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import * as Yup from 'yup';
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {Util} from "../../util/utils";
-import {safePreventDefault} from "react-slick/lib/utils/innerSliderUtils";
-import LoadingSpinner from "../../components/loading_spinner/LoadingSpinner";
-import loadingSpinner from "../../components/loading_spinner/LoadingSpinner";
 
 function RegisterPage() {
     window.scroll(0, 0);
@@ -23,6 +21,9 @@ function RegisterPage() {
     const [passVisible, setPassVisible] = useState(false);
     const [passConfirmVisible, setPassConfirmVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const today = new Date();
+    const year18 = new Date(today.setFullYear(today.getFullYear() - 15));
+
     let navigate = useNavigate();
 
     const handlePasswordVisibility = () => {setPassVisible(!passVisible)}
@@ -35,6 +36,7 @@ function RegisterPage() {
             lastName: values.lastName,
             email: values.email,
             password: values.password,
+            dob: values.date,
         });
 
         try {
@@ -88,6 +90,9 @@ function RegisterPage() {
             .matches("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$", {
                 message: 'Email does not match expected pattern'
             }),
+        date: Yup.date()
+            .required('Required')
+            .max(year18, 'You must be 15+ to place an order.'),
         // terms: Yup.bool()
         //     .required()
         //     .oneOf([true], 'Terms must be accepted'),
@@ -106,7 +111,8 @@ function RegisterPage() {
                     email: '',
                     password: '',
                     confirmPassword: '',
-                    terms: false
+                    date: '',
+                    // terms: false
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={async (values) => {
@@ -266,6 +272,24 @@ function RegisterPage() {
                                     </InputGroup.Text>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.confirmPassword}
+                                    </Form.Control.Feedback>
+                                </InputGroup>
+                            </Form.Group>
+                        </Row>
+                        <Row className="mb-3">
+                            <Form.Group md="4" controlId="email">
+                                <Form.Label>Date of Birth</Form.Label>
+                                <InputGroup hasValidation>
+                                    <Form.Control
+                                        type="date"
+                                        name="date"
+                                        value={values.date}
+                                        onChange={handleChange}
+                                        isValid={touched.date && !errors.date}
+                                        isInvalid={errors.date != null}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.date}
                                     </Form.Control.Feedback>
                                 </InputGroup>
                             </Form.Group>

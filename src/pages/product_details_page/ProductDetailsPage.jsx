@@ -8,6 +8,8 @@ import LoadingSpinner from "../../components/loading_spinner/LoadingSpinner";
 import {useParams} from "react-router-dom";
 import imagePlaceholder from "../../assets/images/Placeholder Image Card.jpeg";
 import ProductsGridList from "../../components/products_grid_list/ProductsGridList";
+import CartItem from "../../models/CartItem";
+import {useCartService} from "../../services/CartServiceProvider";
 
 function ProductDetailsPage() {
     let {productId} = useParams();
@@ -20,6 +22,7 @@ function ProductDetailsPage() {
     const [isSimilarLoading, setIsSimilarLoading] = useState(false);
     const [httpError, setHttpError] = useState();
     const [productImage, setProductImage] = useState();
+    let cartService = useCartService();
 
 
     useEffect(() => {
@@ -105,7 +108,10 @@ function ProductDetailsPage() {
 
     }, [productId]);
 
-
+    const addToCart = () => {
+        let cartItem = CartItem.fromProps(product);
+        cartService.addToCart(cartItem);
+    }
 
     if (httpError) {
         return (
@@ -141,7 +147,7 @@ function ProductDetailsPage() {
                                 <h5 className="text-body-secondary fw-bold">{CurrencyValue(product.unitPrice)}</h5>
                                 <br/>
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <button type="button" className="hard-button green py-2">Add to cart</button>
+                                    <button type="button" className="hard-button green py-2" onClick={addToCart}>Add to cart</button>
                                     <StarsReview
                                         rating={rating}
                                         size={24}

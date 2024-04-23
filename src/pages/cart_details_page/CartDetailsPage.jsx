@@ -5,15 +5,17 @@ import cartItem from "../../models/CartItem";
 import CartItemCard from "../../components/cards/cart_item_card/CartItemCard";
 import React from "react";
 import ProductCard from "../../components/cards/product_card/ProductCard";
-import {json, useNavigate} from "react-router-dom";
+import {json, Navigate, useLocation, useNavigate} from "react-router-dom";
 
 function CartDetailsPage() {
     let cartService = useCartService()
     let navigate = useNavigate();
+    let location = useLocation();
 
     let cartItems = cartService.storedCartItems !== null ? cartService.storedCartItems : [];
 
     const proceedToCheckout = () => {
+
         navigate("checkout")
     }
 
