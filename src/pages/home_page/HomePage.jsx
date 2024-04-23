@@ -3,6 +3,9 @@ import LargeCarousel from "../../components/carousels/large_carousel/LargeCarous
 import FeaturedProducts from "../../components/featured_products/FeaturedProducts";
 import FeaturedCategory from "../../components/featured_category/FeaturedCategory";
 import ProductCategoriesCarousel from "../../components/carousels/product_categories_carousel/ProductCategoriesCarousel";
+import {useEffect} from "react";
+import {Util} from "../../util/utils";
+import Product from "../../models/Product";
 
 function HomePage() {
 

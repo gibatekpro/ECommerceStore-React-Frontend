@@ -18,12 +18,14 @@ import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import {useEffect, useState} from "react";
 import {UserProfile} from "./models/UserProfile";
 import {useElements, useStripe} from "@stripe/react-stripe-js";
+import {Util} from "./util/utils";
+import Product from "./models/Product";
+import ProductCategory from "./models/ProductCategory";
+import ProductCategoryPage from "./pages/ProductCategoryPage/ProductCategoryPage";
 
 
 function App() {
-
     const [userProfile, setUserProfile] = useState(localStorage.getItem('userProfile'));
-
     return (
         <div>
             <AuthProvider>
@@ -33,6 +35,9 @@ function App() {
                         <Routes>
                             <Route path="/" element={<HomePage/>}>
                                 {/*<Route index element={<HomePage />} />*/}
+                            </Route>
+                            <Route path="product-categories">
+                                <Route path=":productCategoryName/:productCategoryId" element={<ProductCategoryPage/>}/>
                             </Route>
                             <Route path="/search" element={<SearchPage/>}>
                             </Route>

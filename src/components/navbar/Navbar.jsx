@@ -2,13 +2,58 @@ import './Navbar.css';
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useAuth} from "../../services/auth/AuthProvider";
 import {useCartService} from "../../services/CartServiceProvider";
+import {useEffect, useState} from "react";
+import {Util} from "../../util/utils";
+import ProductCategory from "../../models/ProductCategory";
+import productCategory from "../../models/ProductCategory";
 
 function Navbar() {
-
+    const [loading, setIsLoading] = useState(true);
+    const [productCategories, setProductCategories] = useState([]);
+    const [httpError, setHttpError] = useState(true);
     let auth = useAuth();
     let cartService = useCartService();
-
     let navigate = useNavigate();
+
+
+    useEffect(() => {
+
+        const fetchProductCategories = async () => {
+
+            const baseUrl = `${Util.apiUrl}ProductCategories`;
+
+            setIsLoading(true);
+
+            try {
+                const response = await fetch(baseUrl).then();
+                if (!response.ok) {
+                    throw new Error('Failed to fetch product categories');
+                }
+                await response.json().then((data) => {
+
+                    let productCategories = data.map((item) => {
+
+                        return ProductCategory.fromProps(item);
+                    });
+                    console.error('Error fetching product categories :', productCategories);
+
+                    setProductCategories(productCategories);
+
+                });
+            } catch (error) {
+                console.error('Error fetching product categories :', error.message);
+                setHttpError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchProductCategories().catch(err => {
+            setIsLoading(false);
+            setHttpError(err.message);
+        });
+
+    }, []);
 
     const performLogout = () => {
 
@@ -44,11 +89,13 @@ function Navbar() {
                             <li className="nav-item dropdown">
                                 <a className="Text black nav-link dropdown-toggle" href="#"
                                    data-bs-toggle="dropdown"
-                                   aria-expanded="false">Category</a>
+                                   aria-expanded="false">Categories</a>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                    {
+                                        productCategories.map(productCategory => (
+                                            <li key={productCategory.id}><Link className="dropdown-item" to={`product-categories/${productCategory.categoryName}/${productCategory.id}`}>{productCategory.categoryName}</Link></li>
+                                        ))
+                                    }
                                 </ul>
                             </li>
                         </ul>

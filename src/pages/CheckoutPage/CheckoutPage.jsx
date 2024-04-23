@@ -38,7 +38,7 @@ function CheckoutPage(props) {
     const [httpError, setHttpError] = useState(false);
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [token, setToken] = useState('');
-    // window.scroll(0, 0);
+    window.scroll(0, 0);
     const {Formik} = formik;
     const [shippingIsBilling, setShippingIsBilling] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -57,12 +57,12 @@ function CheckoutPage(props) {
 
         setToken(theToken)
 
-
-
     }, []);
 
     const handleSubmit = async (values) => {
 
+        //remain at bottom of page
+        window.scrollTo(0, document.body.scrollHeight);
         auth.checkTokenExpiration(token);
 
         if(!stripe || !elements || !elements.getElement(CardElement)){
@@ -89,7 +89,7 @@ function CheckoutPage(props) {
             values.billingPostCode
         );
 
-        let amount = cartService.totalPrice * 100;
+        let amount = Math.round(cartService.totalPrice * 100);
 
         let orderItems = cartService.storedCartItems.map(cartItem => OrderItem.fromProps(cartItem).toJSON());
 
@@ -116,7 +116,7 @@ function CheckoutPage(props) {
         const baseUrl = `${Util.apiUrl}checkout/payment-intent`;
 
         try {
-
+            console.log(`The response intent is: ${token}`);
             const response = await fetch(baseUrl, {
                 method: "POST",
                 body: JSON.stringify(paymentInfo),
@@ -128,8 +128,8 @@ function CheckoutPage(props) {
 
             if (response.ok) {
                 const stripeResponse = await response.json();
+
                 let stripeResponseString = JSON.stringify(stripeResponse);
-                console.log(`The response intent is: ${stripeResponse}`);
 
                 await stripe.confirmCardPayment(
                     stripeResponse.clientSecret, {
@@ -137,8 +137,7 @@ function CheckoutPage(props) {
                             card: elements.getElement(CardElement),
                             billing_details: {
                                 email: values.email,
-                                name: `Name`
-                                // name: `${userProfile.firstName} ${userProfile.lastName}`
+                                name: `${values.firstName} ${values.lastName}`
                             }
                         }
                     }, {handleActions: false})
@@ -146,25 +145,59 @@ function CheckoutPage(props) {
                             if (result.error) {
 
                                 //inform the customer there was an error
-                                alert(`There was an error: ${result.error.message}`);
+                                alert(`There was an error. Could not complete payment`);
                                 setSubmitDisabled(false);
-                                alert('There was an error')
                             } else {
-                                //call REST API via the CheckoutService
-                                alert('Payment complete')
 
-                                cartService.resetCart();
+                                //Success now complete checkout
+                                checkout(checkoutData);
+
                             }
                         }
                     )
             } else {
-                console.log("Failed to fetch user profile ");
+                console.log('Could not create payment intent');
+                console.log('Payment Info', paymentInfo);
             }
         } catch (error) {
-            console.error("Error fetching user profile:", error);
+            console.error("Error creating payment intent:", error);
         } finally {
             setSubmitDisabled(false)
             setIsLoading(false);
+        }
+    }
+
+    const checkout = async (checkoutData) => {
+
+        const baseUrl = `${Util.apiUrl}checkout`;
+        try {
+            const response = await fetch(baseUrl, {
+                method: "POST",
+                body: JSON.stringify(checkoutData),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+
+
+                await response.json().then((data) =>{
+
+                    console.log(`Data>>>>>: ${JSON.stringify(data)}`); // Converting to string for clear output
+
+                    alert(`Payment complete. \n Order Tracking number: ${data.orderTrackingNumber}`);
+
+                    cartService.resetCart();
+                });
+
+
+            } else {
+                console.log('Could not complete checkout');
+            }
+        } catch (error) {
+            console.error("Could not complete checkout:", error);
         }
     }
 

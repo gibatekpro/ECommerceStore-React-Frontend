@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(localStorage.getItem('user'));
     const [userProfile, setUserProfile] = useState(localStorage.getItem('userProfile'));
     const [token, setToken] = useState('');
+    const [tokenExpired, setTokenExpired] = useState(false);
     const [email, setEmail] = useState('');
 
     const login = async (email, password, callback) => {
@@ -48,14 +49,17 @@ export const AuthProvider = ({children}) => {
     const checkTokenExpiration = (token) => {
         const decode = JSON.parse(atob(token.split('.')[1]));
         console.log(decode);
-        console.log(`Time Expiry >>> ${decode.exp}`);
-        if (decode.exp * 1000 < new Date().getTime()) {
+        let expiry = decode.exp * 1000;
+        let expiryDate = new Date(expiry);
+        if (expiry < new Date().getTime()) {
 
-            console.log('Time Expired');
+            setTokenExpired(true);
+            logout();
+            console.log('Token expired');
         }
     };
 
-    const value = {user, login, logout};
+    const value = {user, tokenExpired, login, logout, checkTokenExpiration,};
 
 
     const fetchUserProfile = async (email, token) => {

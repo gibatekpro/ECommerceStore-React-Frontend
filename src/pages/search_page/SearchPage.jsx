@@ -16,7 +16,7 @@ function SearchPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [httpError, setHttpError] = useState();
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(20);
+    const [productsPerPage] = useState(5);
     const [totalAmountOfProducts, setTotalAmountOfProducts] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState('');
