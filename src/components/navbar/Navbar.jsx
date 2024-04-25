@@ -83,10 +83,10 @@ function Navbar() {
                                 <a className="Text black fw-bold nav-link" aria-current="page" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="Text black fw-bold nav-link" href="#">About</a>
+                                <Link className="Text black fw-bold nav-link" to={"/account-page"}>About</Link>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="Text black nav-link dropdown-toggle" href="#"
+                                <a className="Text black nav-link dropdown-toggle"
                                    data-bs-toggle="dropdown"
                                    aria-expanded="false">Categories</a>
                                 <ul className="dropdown-menu">

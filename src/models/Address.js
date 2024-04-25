@@ -1,19 +1,23 @@
 class Address {
-    constructor(address1, address2, city, country, postCode) {
+    constructor(id, address1, address2, city, country, postCode, userProfileId) {
+        this.id = id ? id : null
         this.address1 = address1;
         this.address2 = address2;
         this.city = city;
         this.country = country;
         this.postCode = postCode;
+        this.userProfileId = userProfileId
     }
 
     static fromProps(props) {
         return new Address(
-            props.address1, // Address line 1
-            props.address2 || "", // Address line 2 (optional)
-            props.city, // City name
-            props.country, // Country name
-            props.postCode // Postal code
+            props.id || null,
+            props.address1,
+            props.address2 || "",
+            props.city,
+            props.country,
+            props.postCode,
+            props.userProfileId || null
         );
     }
 }

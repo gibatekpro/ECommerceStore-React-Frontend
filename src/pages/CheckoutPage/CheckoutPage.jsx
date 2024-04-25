@@ -75,19 +75,23 @@ function CheckoutPage(props) {
         setSubmitDisabled(true);
 
         let shippingAddress = new Address(
+            null,
             values.shippingAddress,
             values.shippingAddress2,
             values.shippingCity,
             values.shippingCountry,
-            values.shippingPostCode
+            values.shippingPostCode,
+            null,
         );
 
         let billingAddress = shippingIsBilling ? shippingAddress : new Address(
+            null,
             values.billingAddress,
             values.billingAddress2,
             values.billingCity,
             values.billingCountry,
-            values.billingPostCode
+            values.billingPostCode,
+            null,
         );
 
         let amount = Math.round(cartService.totalPrice * 100);
@@ -149,6 +153,7 @@ function CheckoutPage(props) {
                                 setSubmitDisabled(false);
                             } else {
 
+                                console.log("Created payment intent", checkoutData);
                                 //Success now complete checkout
                                 checkout(checkoutData);
 

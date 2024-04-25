@@ -29,4 +29,8 @@ Stripe React Javascript [Documentation](https://docs.stripe.com/api/payment_inte
 
 Stripe Javascript [Documentation](https://docs.stripe.com/api/payment_intents/create)
 
-#### `npm install @stripe/stripe-js`
+#### `npm install @stripe/stripe-js``
+
+Date format Javascript
+
+#### `npm install date-fns`

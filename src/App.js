@@ -22,6 +22,7 @@ import {Util} from "./util/utils";
 import Product from "./models/Product";
 import ProductCategory from "./models/ProductCategory";
 import ProductCategoryPage from "./pages/ProductCategoryPage/ProductCategoryPage";
+import AccountPage from "./pages/account_page/AccountPage";
 
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
                                 <Route path=":productCategoryName/:productCategoryId" element={<ProductCategoryPage/>}/>
                             </Route>
                             <Route path="/search" element={<SearchPage/>}>
+                            </Route>
+                            <Route path="/account-page" element={<AccountPage/>}>
                             </Route>
                             <Route path="register" element={<RegisterPage/>}>
                             </Route>
