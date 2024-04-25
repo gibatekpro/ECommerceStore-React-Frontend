@@ -42,8 +42,6 @@ function App() {
                             </Route>
                             <Route path="/search" element={<SearchPage/>}>
                             </Route>
-                            <Route path="/account-page" element={<AccountPage/>}>
-                            </Route>
                             <Route path="register" element={<RegisterPage/>}>
                             </Route>
                             <Route path="cart-details" element={<CartDetailsPage/>}>
@@ -54,10 +52,19 @@ function App() {
                             </Route>
                             <Route path="register/*" element={<HomePage/>}>
                             </Route>
+                            <Route path="*" element={<HomePage/>}>
+                            </Route>
                             <Route path="product-details">
                                 <Route path=":productId" element={<ProductDetailsPage/>}/>
                             </Route>
                             <Route path="/login" element={<LoginPage/>}/>
+                            <Route path="/account-page"
+                                   element={
+                                       <RequireAuth>
+                                           <AccountPage/>
+                                       </RequireAuth>
+                                   }
+                            />
                             <Route
                                 path="/protected"
                                 element={

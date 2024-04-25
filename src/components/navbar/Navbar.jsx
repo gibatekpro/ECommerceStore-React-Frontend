@@ -14,6 +14,10 @@ function Navbar() {
     let auth = useAuth();
     let cartService = useCartService();
     let navigate = useNavigate();
+    const userString = localStorage.getItem("userProfile");
+    const parsedUser = auth.user ? JSON.parse(userString) : null;
+
+    let firstName = parsedUser ? parsedUser.firstName : null;
 
 
     useEffect(() => {
@@ -83,7 +87,7 @@ function Navbar() {
                                 <a className="Text black fw-bold nav-link" aria-current="page" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <Link className="Text black fw-bold nav-link" to={"/account-page"}>About</Link>
+                                <Link className="Text black fw-bold nav-link" to={"/about-page"}>About</Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="Text black nav-link dropdown-toggle"
@@ -105,6 +109,16 @@ function Navbar() {
                         {/*    <button className="outline-button" type="submit">Search</button>*/}
                         {/*</form>*/}
                         <ul className="navbar-nav d-flex mb-2 me-5 mb-md-0 ms-md-5">
+                            <li className="nav-item" hidden={!auth.user}>
+                                <Link className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
+                                   to={"/account-page"}  style={{color:"green"}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         className="bi bi-person me-1 mb-1" viewBox="0 0 16 16"  fill="green">
+                                        <path
+                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                    </svg>
+                                    Hi {firstName}</Link>
+                            </li>
                             <li className="nav-item">
                                 <a className="Icon fw-normal nav-link" href="/cart-details">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -117,7 +131,7 @@ function Navbar() {
                             </li>
                             <li className="nav-item" hidden={!auth.user}>
                                 <Link className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
-                                   onClick={performLogout}>
+                                      onClick={performLogout}>
                                     Logout</Link>
                             </li>
                             <li className="nav-item" hidden={auth.user}>

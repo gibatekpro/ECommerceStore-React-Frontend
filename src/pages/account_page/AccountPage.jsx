@@ -18,6 +18,10 @@ import OrderCards from "../../components/order_cards/OrderCards";
 
 function AccountPage() {
 
+
+    //Scroll back to top of image
+    window.scroll(0, 0);
+
     const [profile, setProfile] = useState(localStorage.getItem('userProfile'));
     const [userProfile, setUserProfile] = useState(new UserProfile());
     const [userAddress, setUserAddress] = useState(new Address);
@@ -371,9 +375,15 @@ function AccountPage() {
                         <AddressForm
                             handleSubmit={handleSubmit}
                         />
+
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4935928.2889158875!2d-2.3278149499999996!3d52.838200449999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1714045559332!5m2!1sen!2suk"
+                            width="600" height="450" style={{border: "0"}} allowFullScreen="" loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div hidden={!isEditingProfile}>
                         <ProfileForm
+                            userProfile={userProfile}
                             handleProfileSubmit={handleProfileSubmit}
                         />
                     </div>
@@ -395,22 +405,24 @@ function AccountPage() {
                                                 {orders.map((order, index) => (
                                                     <OrderCards
                                                         key={order.id}
-                                                        index = {index}
+                                                        index={index}
                                                         order={order}
-                                                        token = {token}
+                                                        token={token}
                                                     />
                                                 ))}
                                             </div>
                                         )}
                                         {/*//////////////////////////////////////Accordion Item End//////////////////////////////////*/}
                                     </div>
-                                    <div className="alert alert-info alert-dismissible fade show mt-5" role="alert" hidden={orders && orders.length > 0}>
+                                    <div className="alert alert-info alert-dismissible fade show mt-5" role="alert"
+                                         hidden={orders && orders.length > 0}>
                                         You have not placed any order. Check your<Link to={"/cart-details"}
                                                                                        className="alert-link"> cart</Link>
                                         <button type="button" className="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                     </div>
                                     {/*//////////////////////////////////////Accordion End//////////////////////////////////*/}
+
                                 </div>
                             </div>
                         </div>

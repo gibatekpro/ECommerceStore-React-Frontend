@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Util} from "../../util/utils";
-import {json} from "react-router-dom";
+import {json, useNavigate} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 
 // Creating the auth context with default values
@@ -16,10 +16,13 @@ export const AuthProvider = ({children}) => {
 
     let location = useLocation();
 
+    let navigate = useNavigate();
+
     useEffect(() => {
 
         if (user != null){
             checkTokenExpiration();
+            checkRoles();
         }
 
     }, [location]);
@@ -62,6 +65,30 @@ export const AuthProvider = ({children}) => {
         alert("You have been logged out");
     };
 
+    const checkRoles = () => {
+
+        if (user) { // Ensure user is not null
+            const jsonUser = JSON.parse(user);
+            const theToken = jsonUser.token;
+
+            if (theToken) {
+                const decodedPayload = JSON.parse(atob(theToken.split('.')[1]));
+
+                const roles = decodedPayload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decodedPayload.roles;
+
+                if (roles) { // Ensure roles are present
+                    console.log(`Roles: ${roles}`);
+                } else {
+                    console.log("No roles found in the token.");
+                }
+            } else {
+                console.error("Invalid token.");
+            }
+        } else {
+            console.error("User is null.");
+        }
+
+    }
 
     const checkTokenExpiration = () => {
 

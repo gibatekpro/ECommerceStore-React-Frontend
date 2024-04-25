@@ -1,13 +1,14 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import Row from "react-bootstrap/Row";
+import {UserProfile} from "../../models/UserProfile";
 
 
-const ProfileForm = ({handleProfileSubmit}) => {
+const ProfileForm = ({userProfile, handleProfileSubmit}) => {
 
     const today = new Date();
     const year18 = new Date(today.setFullYear(today.getFullYear() - 15));
@@ -40,9 +41,9 @@ const ProfileForm = ({handleProfileSubmit}) => {
             <hr/>
             <Formik
                 initialValues={{
-                    firstName: "",
-                    lastName: "",
-                    date: '',
+                    firstName: userProfile.firstName,
+                    lastName: userProfile.lastName,
+                    date: "",
                 }}
                 validationSchema={AddressSchema}
                 onSubmit={async (values, {setSubmitting}) => {
