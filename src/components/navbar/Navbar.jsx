@@ -1,5 +1,5 @@
 import './Navbar.css';
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {Link, Navigate, NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useAuth} from "../../services/auth/AuthProvider";
 import {useCartService} from "../../services/CartServiceProvider";
 import {useEffect, useState} from "react";
@@ -14,6 +14,7 @@ function Navbar() {
     let auth = useAuth();
     let cartService = useCartService();
     let navigate = useNavigate();
+    let location = useLocation();
     const userString = localStorage.getItem("userProfile");
     const parsedUser = auth.user ? JSON.parse(userString) : null;
 
@@ -96,7 +97,9 @@ function Navbar() {
                                 <ul className="dropdown-menu">
                                     {
                                         productCategories.map(productCategory => (
-                                            <li key={productCategory.id}><Link className="dropdown-item" to={`product-categories/${productCategory.categoryName}/${productCategory.id}`}>{productCategory.categoryName}</Link></li>
+                                            <li key={productCategory.id}><Link className="dropdown-item"
+                                                                               to={`product-categories/${productCategory.categoryName}/${productCategory.id}`}>{productCategory.categoryName}</Link>
+                                            </li>
                                         ))
                                     }
                                 </ul>
@@ -111,9 +114,9 @@ function Navbar() {
                         <ul className="navbar-nav d-flex mb-2 me-5 mb-md-0 ms-md-5">
                             <li className="nav-item" hidden={!auth.user}>
                                 <Link className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
-                                   to={"/account-page"}  style={{color:"green"}}>
+                                      to={"/account-page"} style={{color: "green"}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         className="bi bi-person me-1 mb-1" viewBox="0 0 16 16"  fill="green">
+                                         className="bi bi-person me-1 mb-1" viewBox="0 0 16 16" fill="green">
                                         <path
                                             d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                                     </svg>
@@ -135,14 +138,18 @@ function Navbar() {
                                     Logout</Link>
                             </li>
                             <li className="nav-item" hidden={auth.user}>
-                                <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
-                                   href="/login">
+                                <Link
+                                    className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
+                                    to="/login"
+                                    state={{from: location}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          className="bi bi-person me-1 mb-1" viewBox="0 0 16 16">
                                         <path
-                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+                                        />
                                     </svg>
-                                    Login</a>
+                                    Login
+                                </Link> {/* Use Link for navigation */}
                             </li>
                             <Link to="search">
                                 <button className="nav-item hard-button blue mx-3" type="submit">Search</button>

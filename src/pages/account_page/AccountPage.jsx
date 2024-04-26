@@ -1,17 +1,13 @@
 import './AccountPage.css'
-import CartItemCard from "../../components/cards/cart_item_card/CartItemCard";
 import React, {useEffect, useState} from "react";
 import CartItem from "../../models/CartItem";
-import CurrencyValue, {Util} from "../../util/utils";
+import {Util} from "../../util/utils";
 import {Link} from "react-router-dom";
 import {CardText} from "react-bootstrap";
 import {UserProfile} from "../../models/UserProfile";
 import Address from "../../models/Address";
 import AddressForm from "../../components/forms/AddressForm";
 import button from "bootstrap/js/src/button";
-import OrderHistory from "../../models/OrderHistory";
-import {useAuth} from "../../services/auth/AuthProvider";
-import address from "../../models/Address";
 import ProfileForm from "../../components/forms/ProfileForm";
 import OrderCards from "../../components/order_cards/OrderCards";
 
@@ -35,6 +31,7 @@ function AccountPage() {
     const userString = localStorage.getItem("user");
     const parsedUser = JSON.parse(userString);
     const theToken = parsedUser.token;
+    const [initialAddress, setInitialAddress] = useState(null)
 
 
     useEffect(() => {
@@ -63,7 +60,7 @@ function AccountPage() {
                     await fetchOrders(userProfileProp);
 
                 } catch (error) {
-                    console.error("Error parsing profile:", error);
+                    console.log("Error parsing profile:", error);
                 }
             }
         }
@@ -90,13 +87,12 @@ function AccountPage() {
                         userProfileId: data.userProfileId || "",
                     };
 
-                    let address = Address.fromProps(data)
-
+                    setInitialAddress(Address.fromProps(data));
                 });
 
 
             } catch (error) {
-                console.error('Error fetching address:', error.message);
+                console.log('Error fetching address:', error.message);
                 setHttpError(error.message);
             } finally {
                 setIsLoading(false);
@@ -128,7 +124,7 @@ function AccountPage() {
 
                 });
             } catch (error) {
-                console.error("Error fetching orders:", error.message);
+                console.log("Error fetching orders:", error.message);
                 setHttpError(error.message);
             } finally {
                 setIsLoading(false);
@@ -136,7 +132,7 @@ function AccountPage() {
         };
 
         fetchProfile().catch((error) => {
-            console.error("Error in fetchProfile:", error);
+            console.log("Error in fetchProfile:", error);
         });
 
     }, [userAddress]);
@@ -197,9 +193,12 @@ function AccountPage() {
                 const data = await response.json();
                 console.log("Updated data is:", data);
                 setUserAddress(data);
+                alert('Update complete')
             }
         } catch (error) {
-            console.error("Error saving address:", error);
+            console.log("Error saving address:", error);
+
+            alert('Update failed')
         } finally {
         }
     }
@@ -237,7 +236,7 @@ function AccountPage() {
                     });
 
                     if (!response.ok) {
-                        console.error("Could not save profile");
+                        console.log("Could not save profile");
                     } else {
                         await response.json().then(data => {
                             let stringUser = JSON.stringify(data);
@@ -251,12 +250,12 @@ function AccountPage() {
                         })
                     }
                 } catch (error) {
-                    console.error("Error saving profile:", error);
+                    console.log("Error saving profile:", error);
                 } finally {
                 }
 
             } catch (error) {
-                console.error("Error parsing profile:", error);
+                console.log("Error parsing profile:", error);
             }
         }
 
@@ -274,6 +273,36 @@ function AccountPage() {
         setIsEditingAddress(isEditingAddress ? false : isEditingAddress)
         setIsEditingProfile(!isEditingProfile)
     }
+
+    const address1 = initialAddress
+        ? initialAddress.address1
+        : userAddress
+            ? userAddress.address1
+            : 'Not set';
+
+    const address2 = initialAddress
+        ? initialAddress.address2
+        : userAddress
+            ? userAddress.address2
+            : 'Not set';
+
+    const city = initialAddress
+        ? initialAddress.city
+        : userAddress
+            ? userAddress.city
+            : 'Not set';
+
+    const country = initialAddress
+        ? initialAddress.country
+        : userAddress
+            ? userAddress.country
+            : 'Not set';
+
+    const postCode = initialAddress
+        ? initialAddress.postCode
+        : userAddress
+            ? userAddress.postCode
+            : 'Not set';
 
     return (
 
@@ -337,33 +366,32 @@ function AccountPage() {
                                     </svg>
                                 </div>
                                 <div className="card-body">
+
                                     <CardText className="fs-6 fw-bold" style={{color: "#23A6F0"}}>Address 1: <small
                                         className="fw-light" style={{color: "black"}}>{
-                                        userAddress ? userAddress.address1 : "Not set"
+                                        address1
                                     }</small></CardText>
                                     <CardText className="fs-6 fw-bold" style={{color: "#23A6F0"}}>Address 2: <small
                                         className="fw-light" style={{color: "black"}}>{
-                                        userAddress ? userAddress.address2 : "Not set"
+                                        address2
                                     }</small></CardText>
                                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2">
                                         <div className="col">
                                             <CardText className="fs-6 fw-bold" style={{color: "#23A6F0"}}>City: <small
                                                 className="fw-light" style={{color: "black"}}>{
-                                                userAddress ? userAddress.city : "Not set"
+                                                city
                                             }</small></CardText>
                                         </div>
                                         <div className="col mt-3 mt-sm-3 mt-md-0 mt-lg-0">
                                             <CardText className="fs-6 fw-bold"
                                                       style={{color: "#23A6F0"}}>Country: <small
-                                                className="fw-light" style={{color: "black"}}>{
-                                                userAddress ? userAddress.country : "Not set"
-                                            }</small></CardText>
+                                                className="fw-light" style={{color: "black"}}>United Kingdom</small></CardText>
                                         </div>
                                         <div className="col mt-3 mt-sm-3 mt-md-3 mt-lg-3">
                                             <CardText className="fs-6 fw-bold"
                                                       style={{color: "#23A6F0"}}>Postcode: <small
                                                 className="fw-light" style={{color: "black"}}>{
-                                                userAddress ? userAddress.postCode : "Not set"
+                                                postCode
                                             }</small></CardText>
                                         </div>
                                     </div>
@@ -375,11 +403,6 @@ function AccountPage() {
                         <AddressForm
                             handleSubmit={handleSubmit}
                         />
-
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4935928.2889158875!2d-2.3278149499999996!3d52.838200449999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1714045559332!5m2!1sen!2suk"
-                            width="600" height="450" style={{border: "0"}} allowFullScreen="" loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div hidden={!isEditingProfile}>
                         <ProfileForm

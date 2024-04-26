@@ -9,18 +9,12 @@ import RegisterPage from "./pages/register_page/RegisterPage";
 import LoginPage from "./pages/login_page/LoginPage";
 import {AuthProvider, useAuth} from "./services/auth/AuthProvider";
 import RequireAuth from "./services/auth/RequireAuth";
-import ProtectedPage from "./pages/ProtectedPage";
 import FailurePage from "./pages/register_page/FailurePage";
 import SuccessPage from "./pages/register_page/SuccessPage";
 import {CartServiceProvider} from "./services/CartServiceProvider";
 import CartDetailsPage from "./pages/cart_details_page/CartDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import {useEffect, useState} from "react";
-import {UserProfile} from "./models/UserProfile";
-import {useElements, useStripe} from "@stripe/react-stripe-js";
-import {Util} from "./util/utils";
-import Product from "./models/Product";
-import ProductCategory from "./models/ProductCategory";
 import ProductCategoryPage from "./pages/ProductCategoryPage/ProductCategoryPage";
 import AccountPage from "./pages/account_page/AccountPage";
 
@@ -64,14 +58,6 @@ function App() {
                                            <AccountPage/>
                                        </RequireAuth>
                                    }
-                            />
-                            <Route
-                                path="/protected"
-                                element={
-                                    <RequireAuth>
-                                        <ProtectedPage/>
-                                    </RequireAuth>
-                                }
                             />
                             <Route path="cart-details/checkout"
                                    element={

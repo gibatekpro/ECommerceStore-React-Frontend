@@ -10,7 +10,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(localStorage.getItem('user'));
     const [userProfile, setUserProfile] = useState(localStorage.getItem('userProfile'));
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('userProfile'));
     const [tokenExpired, setTokenExpired] = useState(false);
     const [email, setEmail] = useState('');
 
@@ -44,7 +44,9 @@ export const AuthProvider = ({children}) => {
                 setUser(userDataString);
                 if (data !== null) {
                     callback(userDataString);
+                    localStorage.setItem("token", data.token);
                     await fetchUserProfile(email, data.token);
+                    checkRoles();
                 }
             } else {
                 throw new Error(data.message || 'Authentication failed');
@@ -60,14 +62,16 @@ export const AuthProvider = ({children}) => {
         setUser(null);
         setUserProfile(null);
         localStorage.removeItem('user');
+        localStorage.removeItem("token");
         localStorage.removeItem('userProfile');
+        localStorage.removeItem('userRoles');
 
         alert("You have been logged out");
     };
 
     const checkRoles = () => {
 
-        if (user) { // Ensure user is not null
+        if (user) {
             const jsonUser = JSON.parse(user);
             const theToken = jsonUser.token;
 
@@ -76,7 +80,10 @@ export const AuthProvider = ({children}) => {
 
                 const roles = decodedPayload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || decodedPayload.roles;
 
-                if (roles) { // Ensure roles are present
+                if (roles) {
+
+                    localStorage.setItem('userRoles', roles);
+
                     console.log(`Roles: ${roles}`);
                 } else {
                     console.log("No roles found in the token.");
